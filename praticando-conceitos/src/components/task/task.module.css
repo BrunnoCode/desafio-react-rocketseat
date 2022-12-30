@@ -30,6 +30,12 @@
   border-radius: 50%;
 }
 
+.checkContainer svg {
+  width: 100%;
+  height: 100%;
+  color: var(--purple);
+}
+
 .buttonDelete {
   background: none;
   color: var(--gray-300);
