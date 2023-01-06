@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { Tasks } from "./components/tasks";
+
+const LOCAL_STORAGE = "savedTasks";
 
 export interface ITask {
   id: string;
@@ -9,13 +11,26 @@ export interface ITask {
 }
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([
-    { id: "teste", title: "teste", isCompleted: true },
-    { id: "testcxce", title: "teste 2", isCompleted: false },
-  ]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  function loadSavedTasks() {
+    const savedTasks = localStorage.getItem(LOCAL_STORAGE);
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+  }
+
+  useEffect(() => {
+    loadSavedTasks();
+  }, []);
+
+  function setTasksAndSave(newTask: ITask[]) {
+    setTasks(newTask);
+    localStorage.setItem(LOCAL_STORAGE, JSON.stringify(newTask));
+  }
 
   function addTask(taskTitle: string) {
-    setTasks([
+    setTasksAndSave([
       ...tasks,
       {
         id: crypto.randomUUID(),
@@ -27,21 +42,30 @@ function App() {
 
   function removeTask(taskId: string) {
     const newTask = tasks.filter((task) => task.id != taskId);
-    setTasks(newTask);
+    setTasksAndSave(newTask);
   }
 
   function toggleCheckedTask(taskId: string) {
-    const newTasks = tasks.map( task => {
+    const newTasks = tasks.map((task) => {
       if (task.id === taskId) {
-        
+        return {
+          ...task,
+          isCompleted: !task.isCompleted,
+        };
       }
-    }) 
+      return task;
+    });
+    setTasksAndSave(newTasks);
   }
 
   return (
     <>
-      <Header onAddTask={addTask}/>
-      <Tasks tasks={tasks} onDelete={removeTask}/>
+      <Header onAddTask={addTask} />
+      <Tasks
+        tasks={tasks}
+        onDelete={removeTask}
+        onComplete={toggleCheckedTask}
+      />
     </>
   );
 }
