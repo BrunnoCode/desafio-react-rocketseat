@@ -56,3 +56,27 @@
 .empty p {
   font-weight: 700;
 }
+@media (max-width: 400px) {
+  .tasks {
+    margin-top: 4rem;
+  }
+  .header p {
+    font-size: 0.475rem;
+  }
+  .header span {
+    padding: 2px 4px;
+    font-size: 0.65rem;
+  }
+  .empty {
+    margin-top: 2rem;
+  }
+  .empty p, span{
+    font-size: 0.675rem;
+  }
+  .empty svg {
+    width: 3rem;
+  }
+  .list p {
+    font-size: 0.675rem;
+  }
+}

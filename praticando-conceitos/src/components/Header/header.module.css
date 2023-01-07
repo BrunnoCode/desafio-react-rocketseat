@@ -44,3 +44,22 @@
   font-size: 0.875rem;
   font-weight: 700;
 }
+
+@media (max-width: 400px) {
+  .header {
+    height: 6.5rem;
+  }
+  .header img {
+    width: 5rem;
+  }
+  .newTaskForm input {
+    height: 80%;
+    font-size: 0.6rem;
+  }
+  .newTaskForm button {
+    height: 80%;
+    padding: 0 1rem;
+    font-size: 0.675rem;
+  }
+  
+}
